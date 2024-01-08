@@ -1,0 +1,380 @@
+1. Difference between display:none and visiblity: hidden
+
+visibility:hidden hides the element, but it still takes up space in the layout.
+
+display:none removes the element from the document. It does not take up any space.
+
+
+2. how you used font in project if it is not found in google font?
+
+-Host the Font Locally: downlad the fonts and with @font-face and src property appropriate to file path
+
+ex:
+ @font-face {
+  font-family: 'YourFontName';
+  src: url('./fonts/your-font-file.woff') format('woff');
+  
+}
+
+body {
+  font-family: 'YourFontName', sans-serif;    // here sans-serif acts as fallback font  
+}
+
+-Use @import Rule: @import url('https://example.com/fonts/your-font.css');
+-use CDN
+
+3.why we use Icomoon?
+IcoMoon enables you to create custom icon fonts by selecting icons from its extensive library or by uploading your Fown SVG icons.
+ex:
+<!-- Add this to your HTML file -->
+<link rel="stylesheet" href="path/to/your/icomoon/style.css"><!-- Example usage -->
+
+<i class="icon-youriconname"></i>
+
+//scss
+
+4.why we use sass?
+
+Sass stands for Syntactically Awesome Stylesheet
+Sass is an extension to CSS
+Sass is a CSS pre-processor
+Sass is a stylesheet language that’s compiled to CSS. It allows you to use variables, nested rules, mixins, functions, and more, all with a fully CSS-compatible syntax. Sass helps keep large stylesheets well-organized
+
+npm install -g sass
+
+A browser does not understand Sass code. Therefore, you will need a Sass pre-processor to convert Sass code into standard CSS.
+
+sass --watch input.scss output.css   (--watch = watch flag tells Sass to watch your source files for changes, and re-compile CSS each time you save your Sass)
+ 
+
+
+5.What is mixins?
+
+ A mixin lets you make groups of CSS declarations that you want to reuse throughout your site.
+
+ @mixin directive to define mixins.To use the mixins we have to use @include directive
+
+ex:
+
+@mixin theme-box($theme: DarkGray) {
+    background: $theme;
+    box-shadow: 0 0 1px rgba($theme, .25);
+    color: #fff;
+    height: 100px;
+    width: 100px;
+}
+
+
+.primary{
+    @include theme-box ($theme:DarkBlue);
+    text-align: right;
+}
+
+6. variables:
+
+ variables as a way to store information that you want to reuse throughout your stylesheet.
+ You can store things like colors, font stacks, or any CSS value you think you’ll want to reuse.
+ Sass uses the $ symbol to make something a variable.
+
+ex:
+
+
+7. Nestings: 
+
+Sass will let you nest your CSS selectors in a way that follows the same visual hierarchy of your HTML.
+
+ex:
+nav {
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  
+    li { display: inline-block; }
+  
+    a {
+      display: block;
+      padding: 6px 12px;
+      text-decoration: none;
+    }
+}
+
+
+8. partials:
+
+You can break your styles into smaller, modular files called partials. This can improve and make it easier to maintain large codebases.
+
+// _variables.scss
+$primary-color: #3498db;
+
+// styles.scss
+@import 'variables';
+
+.button {
+  background-color: $primary-color;
+}
+
+
+9. modules
+You don’t have to write all your Sass in a single file. You can split it up however you want with the @use rule. This rule loads another Sass file as a module, which means you can refer to its variables, mixins, and functions in your Sass file with a namespace based on the filenam
+
+ex:
+
+@use './scss/base';
+
+if we all use rule it should be first to define then anything else.
+
+
+10.Inheritance/ extend:
+
+Using @extend lets you share a set of CSS properties from one selector to another.
+
+ex:
+
+.btn {
+    padding: 10px;
+    margin: 20px;
+    border-radius: 20px;
+    color: white;
+}
+
+.btn-warning {
+    @extend .btn;
+    background-color: orange;
+}
+
+
+11.Functions allow you to define complex operations on SassScript values that you can re-use throughout your stylesheet. 
+ex:
+@function doubleSize($size){
+  @return ($size*2 + px);
+}
+
+.btn-warning {
+    @extend .btn;
+    background-color: orange;
+    padding:doubleSize(10);
+    width:doubleSize(100);
+}
+
+
+
+$colors:(
+  success:green,
+  danger:red,
+  warning:orange
+);
+
+.btn-warning {
+    @extend .btn;
+    background-color: map-get($colors,warning);
+    padding:doubleSize(10);
+    width:doubleSize(100);
+}
+
+
+
+// css
+
+
+11. units in css:
+
+There are two general kinds of units used for length and size in CSS: 
+
+absolute and relative
+
+absolute:
+ 1.px
+  they provide a fixed size regardless of the screen size or viewport dimensions.
+  Useful for elements that need to maintain a specific size regardless of the device.
+
+
+relative:
+
+1. em:
+Relative to the font-size of the element
+if used within the font property, the font-size of the parent element.
+
+2. rem:
+Relative to font-size of the root element.
+
+ex:
+html {
+ font-size: 16px;  //In most browsers, the default font size is 16, so the font-size of html elements is 16px. or we can set our own value
+}
+
+div {
+  font-size: 1.5rem;
+  border: 1px solid black;
+}	
+
+
+3. % percentages:
+Relative to the parent element.
+
+4. Viewport Width (vw): 
+Relative to 1% of the viewport width. (1vw = 1% of viewport width.)
+
+5.Viewport height (vh):
+Relative to 1% of the height of the viewport (1vh = 1% of viewport height)
+
+
+6.Media Query:
+to create responsive designs that adapt to different devices and screen sizes.
+@media screen and (min-width: 600px) and (max-width: 900px) and (orientation: landscape) {
+  /* Styles for screens between 600px and 900px in landscape orientation */
+}
+
+portrait
+The viewport is in a portrait orientation, i.e., the height is greater than or equal to the width.
+
+landscape
+The viewport is in a landscape orientation, i.e., the width is greater than the height.
+
+7. BEM model
+BEM stands for Block, Element, Modifier, and it is a naming convention and methodology for writing CSS code in a modular and maintainable way.
+ex:
+card__content--title
+Block: A standlone entity like button, header, menu
+ex:button
+Element:(__) : It is sementically tied to block
+ex: button__
+modifiers:(--)Modifiers are a powerful feature of BEM that allows you to create variations of blocks and elements without having to create new class names.
+ex:button--disabled
+
+// html:
+
+// css:
+
+  -used to style html dcumnet or website
+  -CSS stands for Cascading Style Sheets
+
+--3 ways to add css
+    -External  (
+      external style sheet file
+      <link rel="stylesheet" href="style.css"/>
+    )
+    -Internal (inside a style tag)
+    -Inline (using style attribute)
+
+--Box model
+    It is box that wrap arund every html elemnt.
+    It consists:
+     1. Border (around border and padding)
+     2. Margin (space outside boredr)
+     3. Padding (space b/w content and border)
+     4. Content (text and images appears)
+
+  Total element height = height + top padding + bottom padding + top border + bottom border
+
+  Total element width = width + left padding + right padding + left border + right border
+
+
+Css selectors:
+ "find" (or select) the HTML elements you want to style.
+
+ 1.Simple selectors (ID, class, name)
+ 2.Combinator selectors ( 
+   relationship between the selectors
+   contains more than one simple selector
+    --descendant selector (space) 
+    all elements that are descendants of a specified element.
+    -child selector (>)
+    The child selector selects all elements that are the children of a specified element.
+    --adjacent sibling selector (+)
+     select an element that is directly after another specific element / immediately following
+    --general sibling selector (~)
+    that are next siblings of a specified element.
+
+   )
+ 3.Pseudo class selectors (define a special state of an element like hover, active ,link, focus.denoted by single colon(:) )
+ 4.Pseudo elements selectors (style specified parts of an element.denoted by double clon (::) like after, before, first line etc)
+ 5.Attribute selectors (based on attribute selector)
+ex:input[type="text"] {
+  width: 150px;
+  display: block;
+  margin-bottom: 10px;
+  background-color: yellow;
+}
+
+input[type="button"] {
+  width: 120px;
+  margin-left: 35px;
+  display: block;
+}
+
+
+
+--flex vs grid:
+Flexbox and Grid are two CSS layout models that provide powerful tools for creating responsive and complex layouts in web development.
+
+flex- one dimensional layout (row/column)
+ex:
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  flex: 1;
+}
+
+It has different properties like 
+order:The order property specifies the order of the flex items.
+
+
+grid- two dimensional layout (row and column):
+
+ex:
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 10px;
+}
+
+
+css variables?
+
+The var() function is used to insert the value of a CSS variable. generally,we will defines variables inside a root for global accessing.
+(--)
+
+ex:
+
+:root{
+    --primary-color:blue;
+    --secondary-color:green;
+    --teritary-color:orange;
+}
+
+.box-1{
+    background-color: var(--primary-color);
+   order: 3;
+}
+
+
+
+css cal()?
+
+The calc() function performs a calculation to be used as the property value.
+
+
+ex:
+.element {
+  width: calc(50% - 10px);
+  height: calc(100vh / 2);
+  margin-top: calc(10px * 2);
+}
+
+before and after in css?
+
+
+
+
+
+
+
+
+
+
