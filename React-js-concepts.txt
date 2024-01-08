@@ -1,0 +1,793 @@
+//js--------------------------
+
+popular prg lang used to make dynamic and interactive websites.
+It is used in both client side and server side. 
+scripting and interpreting language.
+
+
+data types:
+primitive (string,boolean, null, undefined,number,symbol)
+--stored directly in variable location.
+--immutable(changeable)
+--compared by value
+--passed by value (value is copied)
+non-primitive or reference types(array,object,function,date,map(key-value pairs),set(unique values))
+--stored by reference to memory location
+--mutable (unchangeable)
+--compared by reference
+--passed by refernce (reference is copied)
+
+let,var,const:
+var: functional scoped. if we declare outside they global variable. can be redeclare ad reassign.can be hoisted and initialised.(undefined assigned)
+let: block scoped. limited to block in which it is defined. cannot decare but reassign. can be hoisted but not initialised(temporal dead zone -reference error)
+const:block scoped. limited to block in which it is defined. cannot decare and reassign. can be hoisted but not initialised(temporal dead zone -reference error)
+
+null vs undefined:
+null
+--type is object
+--assigned value that points to no objects.
+-- converts into 0 while performs primitive operatin
+undefined:
+--type is undefined
+--not assigned a value
+-- converts into NaN while performs primitive operatin
+
+NaN:
+NaN stands for "Not-a-Number" in JavaScript.
+ It is a special value that represents the result of an operation that should return a valid number but doesn't.
+ex:console.log(parseInt('abc'));    // Outputs: NaN
+console.log(parseFloat('12.34a')); // Outputs: NaN
+ex:
+let x;
+console.log(x * 2); // Outputs: NaN
+
+console.log(isNaN('abc'));       // Outputs: true
+console.log(Number.isNaN('abc')); // Outputs: false
+console.log(Number.isNaN(NaN));   // Outputs: true
+
+
+slice vs splice
+
+slice : Immutable and it extract the part of array/string
+
+splice: mutuable and it modifies like insert/addd
+
+Splice method modifies the original array and returns the deleted array
+
+
+first-class function: functions are treated by like any other variables.
+
+first-order function: that wont accept other functions as argument and doesnt return a function.
+
+unary function: that accept single arg/parameter by function.
+
+A Pure function: is a function where the return value is only determined by its arguments without any side effects.
+ex:
+const pureAddNumber = (number) => (argNumberArray) =>
+  argNumberArray.concat([number]);
+
+Currying: is the process of taking a function with multiple arguments and turning it into a sequence of functions each with only a single argument. 
+used code readability
+ex:
+const curryUnaryFunction = (a) => (b) => (c) => a + b + c;
+console.log(curryUnaryFunction (1)(2)(3)
+
+
+
+//IIFE:
+IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. 
+obtain data privacy and security. varaible cannot acessed directly
+//Es6 features
+// loops
+
+
+
+
+
+
+
+Hoisting in js:
+where variable and function declarations are moved to the top of their containing scope during the compilation phase. 
+This means that you can use variables and functions before they are declared in the code.
+ However, it's important to note that only the declarations are hoisted, not the initializations or assignments.
+ var, let and const hoisted but let and const are hoisted with out intialisation
+function dec->hoisted at the top of scope
+exp, arrow func->only variable is hoisted not the entire function.
+
+console.log(x)
+var x=5
+
+console.log(y) //ReferenceError: Cannot access 'y' before initialization
+const y=15
+
+console.log(z) //ReferenceError: Cannot access 'y' before initialization
+let z=15
+
+
+
+-memoization:
+Memoization is a optimisation technique which attempts to increase a function’s performance by caching its previously computed results. 
+ex:
+function memoize(func) {
+  const cache = {};
+
+  return function(...args) {
+    const key = JSON.stringify(args);
+
+    if (cache[key]) {
+      console.log('Fetching from cache');
+      return cache[key];
+    } else {
+      console.log('Calculating result');
+      const result = func.apply(this, args);
+      cache[key] = result;
+      return result;
+    }
+  };
+}
+
+// Example function to be memoized
+function add(a, b) {
+  console.log('Adding');
+  return a + b;
+}
+
+// Memoized version of the function
+const memoizedAdd = memoize(add);
+
+// First call
+console.log(memoizedAdd(1, 2)); // Outputs: Adding, Calculating result, 3
+
+// Second call with the same arguments
+console.log(memoizedAdd(1, 2)); // Outputs: Fetching from cache, 3
+
+
+// closures:
+the combination of a function and the lexical environment within which that function was declared.
+allows a function to remember and access its lexical scope even when it's executed outside that scope.
+ It is an inner function that has access to the outer or enclosing function’s variables.
+uses-creating private variable and data encapsulation
+ex:
+function counter() {
+  let count = 0;
+
+  return function() {
+    return ++count;
+  };
+}
+
+const increment = counter();
+console.log(increment()); // Outputs: 1
+console.log(increment()); // Outputs: 2
+
+ex:
+
+function welcome(name){
+  let wish="hello"
+  return function greeting(time){
+    console.log(wish+time+name)
+  }
+
+};
+
+let personName=welcome("dinesh")
+personName("Good morning")
+
+//promises:
+is object that handles async operations.3 states
+1.pending
+2.fullfilled (resolved)
+3 rejected
+
+ex:
+let myVal=-1;
+
+
+let myPromise=new Promise((res,rej)=>{
+
+    if(myVal<0){
+        res("This is resolved")
+    }
+    else{
+        rej("This is rejected")
+    }
+});
+
+myPromise.then((val)=>console.log(val)) //This is resolved
+.catch((err)=>console.log(err)) 
+
+//async-await: handling async opeartions
+
+async makes a function return a Promise
+
+await makes a function wait for a Promise
+
+The await keyword makes the function pause the execution and wait for a resolved promise before it continues:
+
+synchronous-line by line execution
+
+On the other hand, an operation is asynchronous if it can initiate a request or task and continue with other operations without waiting for the completion of that task. 
+ex: Api calls,data from server
+
+
+// callbacks
+Callbacks in JavaScript refer to functions that are passed as arguments to other functions and are executed after the completion of some asynchronous operation or task
+
+// callback hell:
+ when multiple asynchronous operations are nested inside one another, making the code harder to read and maintain.
+
+//event bubbling ,capturing
+
+// modules:
+way to organize code into separate files or modules, making it easier to manage, reuse, and maintain code
+ex: import ,export, (require('filename');(node js)->common js
+
+
+
+oops in js:
+Object-Oriented Programming is a programming style based on classes and objects.
+JavaScript is prototype-based procedural language, which means it supports both functional and object-oriented programming.
+
+
+Object is a unique entity that contains properties and methods.An Object is an instance of a class. 
+JavaScript Classes are basically a blueprint or template of the object. 
+JavaScript classes can be used to create new objects in Javascript.
+4 principles-
+1.Abstraction (displaying only essential information and hiding the details.)
+2.Encapsulation (binding the data and methods into a single unit to protect it from outside access)
+3.Inheritance (will inherit from the parent class all the properties and methods that it has using extend keyword
+to access the properties and methd we use super(prp1,2..)
+and super should must be first in constructor methd
+)
+
+4.Polymorphism (many forms that means ability of one method to return different values according to certain conditions.
+  a) parameter based
+  b) inheritance based ( parent class that sets a method and the child overrides that method to modify it in some way)
+ )
+
+
+-call,apply, bind:
+Call: The call() method invokes a function with a given this value and arguments provided one by one
+
+Apply: Invokes the function with a given this value and allows you to pass in arguments as an array
+
+Bind: returns a new function, allowing you to pass any number of arguments
+
+ex:
+
+var employee1 = { firstName: "John", lastName: "Rodson" };
+var employee2 = { firstName: "Jimmy", lastName: "Baily" };
+//call (commoa seperated list of arguments)
+
+function invite(greeting1, greeting2) {
+    console.log(
+      greeting1 + " " + this.firstName + " " + this.lastName + "! " + greeting2
+    );
+  }
+  
+invite.call(employee1,"hello","how are you")
+
+
+//apply (array as arguments)
+
+invite.apply(employee2,["hey","good morning"]);
+
+// bind (returns a function, pass n number of argumnets)
+
+const inviteEmp1=invite.bind(employee1)
+
+inviteEmp1("hey","good morning");	
+
+
+JSON:
+JSON (JavaScript Object Notation) is a lightweight data-interchange format (text format).
+format for storing and transporting data.
+used when data is sent from a server to a web page.
+ex:
+const person = {
+  "name": "John Doe",
+  "age": 30,
+  "isStudent": false,
+  "hobbies": ["reading", "coding"]
+};
+
+JSON.stringify()-convert a JavaScript object into a JSON string.
+JSON.parse()-used to parse a JSON string and convert it into a JavaScript object.
+javascript.
+
+ex:
+Handling JSON with Fetch API
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
+
+this keyword?
+refers to object.this keyword refers to the object that is currently executing the code.
+when used inside a function this value will change depending on how that function is defined, how it is invoked, and the default execution context.
+ this keyword will refer to different objects depending on how it is used. 
+
+
+//stack and queue and heap:
+
+The heap is a region of memory for dynamic memory allocation, where objects are stored.
+The stack is used for managing function calls and local variables with a Last In, First Out (LIFO) structure.
+A queue is a data structure following the First In, First Out (FIFO) principle, used for managing tasks or data in sequential order. In the context of memory, it's less about direct memory storage and more about managing the order of operations.
+
+//Synchronous programming often follows a stack-like behavior.
+// In synchronous programming, execution follows a straightforward, top-to-bottom flow,
+//  which aligns well with the Last In,
+//  First Out (LIFO) principle of a stack. Each function call or operation is added to the top of the stack, and when a function completes, 
+// it is removed from the stack.
+
+
+// Asynchronous programming often involves queuing mechanisms to manage the order of execution.
+---------------------
+git vs github:
+
+git Git is the distrubuted version control system. merging and branching and tracking histry
+
+GitHub is a hosting service that leverages Git for collaborative software developmen.git reposutories
+offering features like issue tracking, pull requests, collaboration tools, and more.
+GitHub is built on top of Git.
+centralised platform  hosting and collobaorating on git repostories
+
+
+
+ex:
+for git.....
+git init          # Initializes a new Git repository
+git add <file>    # Stages changes for commit
+git commit        # Commits changes with a message
+git push          # Pushes changes to a remote repository
+git pull          # Pulls changes from a remote repository
+
+
+---------------------
+semantic UI:
+Semantic UI is an open-source framework that uses CSS and jQuery to build great user interfaces. 
+follows 16 grid layout
+
+
+
+
+-------------------
+databases:
+
+A database is a structured collection of data that is organized in a way that makes it easy to manage, retrieve, and update.
+DBMS is software that manages databases.
+Relatinal-mySql,Oracle,postresQl--> data is organized into tables, which consist of rows and column
+non-realational-Redis,mongodb,cassandra--->  data is organized into key-value pairs, graphs
+
+schema-structure of database
+primary key-uniquekey (for every record)
+foreign key- link b/w to two tables
+
+SQL (Structured Query Language) is a common language for interacting with relational databases.\
+ex:
+SELECT
+INSERT INTO
+UPDATE employees SET salary = 60000 WHERE id = 1;
+DELETE FROM employees WHERE id = 1;
+ORDER BY -->sorting
+
+LIMIT->limit no of rows
+OFFSET->from which row it has do
+
+
+JOINS:Joins are used to combine rows from two or more tables based on a related column between them
+
+INNER JOIN-returns only matching rows.
+LEFT JOIN-all rows from left table and matching rows of right table
+RIGHT JOIN-all rows from right table and matching rows of left table
+FULL JOIN-Returns all rows when there is a match in either the left or right table
+CROSS JOIN-all possible combinations of rows.
+
+------------------------
+
+// react ----------------------------
+React-UI library fr building UI, reusable components and SPA.
+current react version-18.2.0 
+virtual dom (copy of real dom)- react compare both and update only changes.
+JSX-javascript xml (write html in react)
+react components- class and function components
+before v 16.8 class comp is used because earlier function compoents stateless components.
+ex:
+class Car extends React.Component {
+  render() {
+    return <h2>Hi, I am a Car!</h2>;
+  }
+}
+
+function components-like functions returns HTML elements.
+from 16.8, with the help of hooks fc are state components.
+props- passing data/info from parent compoenent to child compnent.
+events -same like html events but here we use camelCase .(like onClick)
+conditionals- if else, logical && operator, ternary operator
+lists- using map() and key prop with unique value/id must be provided to maintain uniquness.
+react memo-Using memo will cause React to skip rendering a component if its props have not changed.
+ex:
+export default memo(Todos);
+
+This can improve performance.
+
+common ways to style
+
+Inline styling
+CSS stylesheets
+CSS Modules
+
+
+hooks-Hooks allow function components to have access to state and other React features.
+Hooks can only be called inside React function components.
+Hooks can only be called at the top level of a component.
+Hooks cannot be conditional
+
+If you have stateful logic that needs to be reused in several components, you can build your own custom Hooks.
+
+state: "state" is a JavaScript object that represents the current condition or data of a component.
+
+hooks:
+useState:used to track the state in function component
+
+const[status,setStatus]=useState(false);
+status->variable setStatus->setter function
+
+useEffect:The useEffect Hook allows you to perform side effects in your components like data fetching, timers, cleanup..
+useEffect(function,dependency);
+
+useContext:
+to maintain state globally and to avoid prop drilling.
+To create context, you must Import createContext and initialize it:
+Wrap child components in the Context Provider and supply the state value.
+In order to use the Context in a child component, we need to access it using the useContext Hook.
+ex:
+const UserContext = createContext()
+    <UserContext.Provider value={user}>
+      <h1>{`Hello ${user}!`}</h1>
+      <Component2 user={user} />
+    </UserContext.Provider>
+
+to acess the state we use useContext.
+
+useRef:
+when you need to interact with the DOM directly or when you want to persist a value across renders without triggering a re-render when the value changes.
+ex:
+const myRef = useRef(null);
+<input ref={myRef} type="text" />
+
+useReducer:
+It is an alternative to the useState hook, especially when the state logic is complex
+ and involves multiple sub-values, or when state transitions depend on the previous state
+The useReducer hook takes two arguments: a reducer function and an initial state. It returns an array with two elements: the current state and a dispatch function.
+ The dispatch function is used to trigger state transitions.
+
+
+ex:
+import React, { useReducer } from 'react';
+
+// Reducer function
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+const Counter = () => {
+  // useReducer hook
+  const [state, dispatch] = useReducer(counterReducer, { count: 0 });
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT' })}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+
+
+
+useCallback:
+useCallback is specifically designed for memoizing functions, especially in scenarios where these functions are passed as props to child components.
+  const increment = useCallback(() => {
+    setCount(count + 1);
+  }, [count]);
+
+useMemo:
+useMemo is used for memoizing values (not functions). It's often used when you want to avoid recalculating a value every time a component renders.
+
+babel compiler:
+The React code, including JSX syntax and any other modern JavaScript features (Es6 features), is run through Babel.
+ Babel transpiles the code into standard JavaScript that is compatible with a wide range of browsers
+
+webpack:
+Webpack in react is a JavaScript module bundler that is commonly used with React to bundle and manage dependencies. 
+It takes all of the individual JavaScript files and other assets in a project, such as images and CSS, and 
+combines them into a single bundle that can be loaded by the browser.
+
+Higher order compnents:
+Higher-Order Component is a function that takes a component and returns a new component with additional props or modified behavior
+They allow you to reuse component logic across multiple components
+F
+react-routing:
+npm i react-router-dom@latest  //v6 current
+
+ <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+<BrowserRouter>
+
+two way data binding: (lifting state up is one of the example)
+Lifting state up refers to the idea of managing the state in a common ancestor (usually a parent component) and passing down the state and callback functions as props to child components. This allows child components to receive and update the shared state, and the changes in child components are reflected in the parent component.
+
+
+// typescript:
+
+
+TypeScript is a syntactic superset of JavaScript which adds static typing.
+Static typing in TypeScript means that variable types are known at compile-time. This allows the TypeScript compiler to catch type-related errors early in the development process.
+TypeScript uses compile time type checking. Which means it checks if the specified types match before running the code, not while running the code.
+TypeScript is transpiled into JavaScript using a compiler.
+
+typescript in react project:
+npm install --save-dev typescript
+npx tsc --init     // creates tsconfig.json
+npm install --save-dev @types/react @types/react-dom
+
+Rename Files to Use TypeScript Extensions (.js/.jsx to .tsx)
+
+types:
+
+// Import stylesheets
+import './style.css';
+
+// Write TypeScript code!
+const appDiv: HTMLElement = document.getElementById('app');
+appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
+
+//primitives
+let myName: string = 'ggs';
+let age: number = 22;
+let myStatus: boolean = true;
+
+let myNumber: Array<number> = [1, 2, 3];
+let myNames: string[] = ['a', 'b'];
+
+// Represents an array where the type of a fixed number of elements is known.
+let myTuple: [string, number] = ['abc', 1];
+
+enum Color {
+  Red,
+  Green,
+  Yellow,
+}
+
+let color: Color = Color.Green;
+
+console.log(color); // 1  by default enums start with 1 and then ++
+
+enum Status {
+  Success = 200,
+  Failure = 500,
+}
+
+console.log(Status.Success); // Pending
+
+// avoid using any
+let data: any = 42;
+
+//using object
+let myObj: object = { name: 'dinesh', age: 27 };
+let myObj2: { name: string; age: number } = { name: 'dinesh', age: 27 };
+
+//using function
+const myDetails = (obj: { x: string; y: number }): number => {
+  return obj.y;
+};
+
+console.log(myDetails({ x: 'dinesh', y: 27 }));
+
+// union
+
+const myId: string | number = '1';
+
+//intersection
+let intersectionType: { name: string } & { age: number } = { name: 'John', age: 30 };
+
+
+type Car = {
+  color: string;
+  price: number;
+};
+
+const car = (details: Car) => {
+  console.log(details.color, details.price);
+};
+
+car({ color: 'red', price: 250000 });
+
+type vs inheritance:
+
+type is suitable for unions, primitives,intersections
+
+interface is suitable for class, objects
+
+ex: types
+// Using types to define a Point type
+type Point = {
+  x: number;
+  y: number;
+};
+
+// Using types to define a Color type with a union
+type Color = 'red' | 'green' | 'blue';
+
+// Using types to define a complex type with intersection and union
+type Shape = {
+  type: 'circle' | 'rectangle';
+  dimensions: {
+    radius?: number; // optional for rectangle
+    width?: number;  // optional for circle
+    height?: number; // optional for circle
+  };
+  color: Color;
+};
+
+
+ex: interfaces
+// Declaration merging with interfaces
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+// Merged User interface
+// Result: { name: string; age: number; }
+const user: User = {
+  name: 'John',
+  age: 30,
+};
+
+
+//promises
+
+async function fetchDataAsync(): Promise<void> {
+  try {
+    const result: string = await fetchData();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+}
+
+// Using the async function
+fetchDataAsync();
+
+
+
+
+
+
+
+
+// REST API's: (Representational State Transfer)
+REST defines a consistent and uniform interface for interactions between clients and servers. For example, the HTTP-based REST APIs make use of the standard HTTP methods (GET, POST, PUT, DELETE, etc.)
+Common HTTP methods include GET (retrieve a resource), POST (create a new resource), PUT (update a resource), DELETE (remove a resource), and PATCH (partially update a resource).
+It include 200 OK (successful), 404 Not Found (resource not found), and 500 Internal Server Error (server error).
+
+//SOAP vs REST:
+REST is an architectural style based on principles, while SOAP (Simple Object Access Protocol) is a protocol. REST uses standard HTTP methods, while SOAP uses a request-response messaging pattern over HTTP, SMTP, or other protocols.
+
+
+
+// Bootsrap
+
+//Bootstrap is a popular open-source CSS framework that provides pre-designed components, styles, and utilities for building responsive and mobile-first web applications.
+
+// break points(grid tiers):
+Bootstrap breakpoints are predefined points at which a layout should change based on the device's screen size
+X-Small	default	<576px
+Small	sm	≥576px
+Medium	md	≥768px
+Large	lg	≥992px
+Extra large	xl	≥1200px
+Extra extra large	xxl	≥1400px
+
+
+// layout
+The Bootstrap grid system is a responsive layout system with a 12-column grid. It uses containers, rows, and columns to create flexible and responsive layouts. 
+.col-	.col-sm-	.col-md-	.col-lg-	.col-xl-	.col-xxl-
+
+ex:
+<div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+
+// alignment
+ vertical (align-items-start/center/end) (individual item- align-self-start/center/end)
+ Horizntal (justify-content-center/around/between/evenly)
+
+//utilities
+utility/helper classes to quickly style elements without using any CSS code.
+ex:
+
+spacing-> m-5,p-3
+width-> w-25,50,75,100,mw-auto, .mw-100
+height->.h-25, .h-50, .h-75, .h-100, .mh-auto, .mh-100,
+bg-> bg-primary,secondary
+ex:
+<div class="p-3 mb-2 bg-primary text-white">.bg-primary</div>
+<div class="p-3 mb-2 bg-secondary text-white">.bg-secondary</div>
+<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
+<div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
+<div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
+<div class="p-3 mb-2 bg-info text-dark">.bg-info</div>
+<div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
+<div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
+<div class="p-3 mb-2 bg-body text-dark">.bg-body</div>
+<div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
+<div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
+
+direction:
+d-flex, flex-row, flex-column
+
+text: text-start/end/center
+
+font-sizes:fs-1/2/3...5
+
+font-weigt:fw-bold
+
+// compnents:
+Bootstrap components are pre-designed UI elements that can be easily integrated into a web page. Examples include buttons, forms, navigation bars, alerts, and modals.
+
+//Bootstrap 5 Containers:
+pad the content inside of them, and there are two container classes available:
+The .container class provides a responsive fixed width container
+The .container-fluid class provides a full width container, spanning the entire width of the viewport
+// accordion-vertical collapsing
+
+// card
+Bootstrap’s cards provide a flexible and extensible content container with multiple variants and options.
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
