@@ -1,0 +1,8 @@
+$primary-heading-color: blue;
+$primary-heading-font:24px;
+
+
+h2{
+    color: $primary-heading-color;
+    font-size: $primary-heading-font *3;
+}

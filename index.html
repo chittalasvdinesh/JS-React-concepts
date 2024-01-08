@@ -19,14 +19,14 @@
        }
       }
    
-       body {
+       /* body {
          display: flex;
          justify-content: center;
          align-items: center;
          height: 100vh;
          margin: 0;
        }
-   
+    */
        .container {
          display: flex;
          flex-wrap: wrap;
@@ -46,11 +46,138 @@
          background-color: #3498db; /* Example background color */
          animation: animationBox 2s infinite;
        }
+
+
+       table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td{
+           border: 2px solid white;
+           text-align: center;
+           padding: 10px
+        }
+
+        .table{
+            display: table;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .table-row{
+            display: table-row;
+        }
+
+        .table-cell{
+            display: table-cell;
+            border:2px solid white;
+            text-align: center;
+            padding: 10px;
+        }
+
    </style>
 
 </head>
 
 <body>
+    <h2>Hello world</h2>
+    <nav>
+        <ul>
+            <li>
+                <a>Home</a>
+            </li>
+            <li>
+                <a>Menu</a>
+            </li>
+            <li>
+                <a>Contact us</a>
+            </li>
+            <li>
+                <a>Carrers</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <div class="success">
+                success
+            </div>
+            <div class="primary">
+                primary
+            </div>
+            <div class="danger">
+                danger
+            </div>
+            <div class="info">
+                Info
+            </div>
+        </section>
+        <section>
+            <button class="btn-success">Add</button>
+            <button class="btn-danger">Remove</button>
+            <button class="btn-warning">Clear</button>
+
+        </section>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Dinesh</td>
+
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Satya</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <section>
+            <div class="table">
+              <div class="table-row table-header">
+                <div class="table-cell">
+                     ID
+                </div>
+                <div class="table-cell">
+                    Name
+               </div>
+              </div>
+              <div class="table-row">
+                <div class="table-cell">
+                     1
+                </div>
+                <div class="table-cell">
+                    Chittala
+               </div>
+              </div>
+              <div class="table-row">
+                <div class="table-cell">
+                     2
+                </div>
+                <div class="table-cell">
+                    Venkata
+               </div>
+              </div>
+            </div>
+        </section>
+        <!-- <a href="mailto:example@example.com">Send Email</a> -->
+    </main>
+    <div>
     <div class="container">
         <div class="box"></div>
         <div class="box"></div>
@@ -64,6 +191,8 @@
       <div class="animation-box">
 
       </div>
+    </footer>
+      <link rel="stylesheet" href="style.css">
       <script src="index.js"></script>
 </body>
 </html>
