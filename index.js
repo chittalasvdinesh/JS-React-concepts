@@ -1,4 +1,4 @@
-const arr = [1, 2, 1, 3, 4, 3, 5, 3, 2,4,4,4];
+const arr = [1, 2, 1, 3, 4, 3, 5, 3, 2,4,4,];
 
 //output output =  [1, 2, 3, 4, 3, 5,3];
 let res = [];
@@ -11,7 +11,6 @@ arr.map((val, i) => {
     if ((filteredList.length) % 2 == 0) {
         if (uniqueList) {
             res.push(val)
-
         }
     }
     else {
@@ -116,4 +115,12 @@ function syncOperation2(){
 syncOperation2();
 syncOperation1();
 
-console.log(syncStack)
+console.log(syncStack);
+
+
+const myApp=document.getElementById("app");
+const myAppHeadingEl=document.createElement('h1');
+const text="My APP Heading";
+const headerContent=document.createTextNode(text);
+myAppHeadingEl.appendChild(headerContent);
+myApp.appendChild(myAppHeadingEl)

@@ -1,0 +1,219 @@
+-Next.js:
+ --Flexible react framework for creating fast and full stack web applications.
+
+
+-Building blocks of a web application:
+ --UI(users will consumer and interact with your application).
+ --Routing(Navigating b/w diff parts of application).
+ --Data fetching(How to get it).
+ --Rendering(when and where to render the static/dynamic content).
+ --Integrations(3rd party services usage and how to connect them (cms,auth,payments)).
+ --Infrastructure(where to deploy,run,store your application).
+ --Performance(how to optmise application for end users).
+ --Scalability(how your application adapts as your team, data, and traffic grow.)
+ --Developer experience(your team's experience building and maintaining your application.).
+
+
+-React js?
+  --Js library for building UI(what user can see and interact with on-screen).
+  -- Building react requires some effort from Developers like spend time configuring tools and reinventing solutions for common application requirements.
+
+-Next.js?
+  --React framework for creating web applications.
+  --By framework, we mean Next.js handles the tooling and configuration needed for React, and provides additional structure, features, and optimizations for your application.
+  --Next.js features to solve common application requirements such as routing, data fetching, and caching - all while improving the developer and end-user experience.
+
+
+-Rendering UI:
+ --When a user visits a web page, the server returns an HTML file to the browser.
+ --The browser then reads the HTML and constructs the Document Object Model (DOM).
+
+--HTML vs DOM:
+  -HTML:Initial page content.
+  -DOM:Updated page content which can be changed by js.
+
+  ex:
+
+  // index.html
+
+   <div id="app">
+
+      </div>
+
+
+  // index.js
+
+const myApp=document.getElementById("app");
+const myAppHeadingEl=document.createElement('h1');
+const text="My APP Heading";
+const headerContent=document.createTextNode(text);
+myAppHeadingEl.appendChild(headerContent);
+myApp.appendChild(myAppHeadingEl)
+
+
+--Imperative vs declarative programming:
+ -Imperative: writing the steps for how the user interface should be updated. (like DOM method in above example).
+ -declarative: able to declare what they want to show 
+
+ ex:imperative programming is like giving a chef step-by-step instructions on how to make a pizza.
+  Declarative programming is like ordering a pizza without being concerned about the steps it takes to make the pizza. 
+
+
+-React is the popular declarative library for building UI.
+
+- react= A core library.
+- react-dom= provides DOM methods to use React with dom.
+
+ex:
+      const app = document.getElementById('app');
+      const root = ReactDOM.createRoot(app);
+      root.render(<h1>Develop. Preview. Ship.</h1>);
+
+
+-browsers don't understand JSX out of the box, so you'll need a JavaScript compiler, such as a Babel, to transform your JSX code into regular JavaScript.
+
+
+
+-Next.js
+
+1.Installation command:
+
+    npm install react@latest react-dom@latest next@latest -->to existing html project
+
+    npx create-next-app@latest my-next-app
+
+    npm run dev -->to start tge local server
+
+2.Routing
+Next.js uses file-system routing. This means that instead of using code to define the routes of your application, you can use folders and files.
+
+
+--Server and client components:
+
+  - Environment: application code executed in server and the client.
+  - Network boundary: seperates the server code and client code.
+
+  - components are split into two module graphs.
+   1.server module graph or tree (server components rendered on server)
+   2.client module graph or tree (client components rendered on client)
+
+
+-After Server Components are rendered, a special data format called the React Server Component Payload (RSC) is sent to the client.
+ The RSC payload contains:
+
+    1.The rendered result of Server Components.
+    2.Placeholders (or holes) for where Client Components should be rendered and references to their JavaScript files.
+
+-React uses this information to consolidate the Server and Client Components and update the DOM on the client.
+
+-Next.js uses  react Server Components by default
+
+
+-the React 'use client' directive at the top of the file. This tells React to render the component on the client.
+
+    ex:
+
+    'use client'
+
+    import { useState } from 'react';
+    
+    export default function LikeButton() {
+    const [likes, setLikes] = useState(0);
+    
+    function handleClick() {
+        setLikes(likes + 1);
+    }
+    
+    return <button onClick={handleClick}>Like ({likes})</button>;
+    }
+
+
+- you should notice the browser automatically updates to reflect the change.
+  This feature is called Fast Refresh. It gives you instantaneous feedback on any edits you make and comes pre-configured with Next.js.
+
+
+-Dashboard project using next.js
+
+npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
+
+-Folder structure
+
+    /app: Contains all the routes, components, and logic for your application, this is where you'll be mostly working from.
+    /app/lib: Contains functions used in your application, such as reusable utility functions and data fetching functions.
+    /app/ui: Contains all the UI components for your application, such as cards, tables, and forms. To save time, we've pre-styled these components for you.
+    /public: Contains all the static assets for your application, such as images.
+    /scripts: Contains a seeding script that you'll use to populate your database in a later chapter.
+    Config Files: You'll also notice config files such as next.config.js at the root of your application. Most of these files are created and pre-configured when you start a new project using create-next-app. You will not need to modify them in this course.
+
+
+
+
+-You can import global.css in any component in your application, but it's usually good practice to add it to your top-level component. In Next.js, this is the root layout.
+
+ Add global styles to your application by navigating to /app/layout.tsx and importing the global.css file:
+
+ ex:
+
+ import '@/app/ui/global.css';
+
+ -CSS Modules allow you to scope CSS to a component by automatically creating unique class names,
+  so you don't have to worry about style collisions as well.
+
+-clsx is a utility library commonly used in React applications to conditionally apply CSS classes.
+ It helps simplify the process of managing dynamic class names based on certain conditions or props in your React components.
+
+ --npm install clsx
+
+    ex:
+
+    import clsx from 'clsx';
+    
+    export default function InvoiceStatus({ status }: { status: string }) {
+    return (
+        <span
+        className={clsx(
+            'inline-flex items-center rounded-full px-2 py-1 text-sm',
+            {
+            'bg-gray-100 text-gray-500': status === 'pending',
+            'bg-green-500 text-white': status === 'paid',
+            },
+        )}
+        >
+        // ...
+    )}
+
+
+-Optimizing Fonts and Images:
+-fonts:
+Next.js automatically optimizes fonts in the application when you use the next/font module. It downloads font files at build time and hosts them with your other static assets. 
+This means when a user visits your application, there are no additional network requests for fonts which would impact performance.
+
+ex:
+
+//font.ts:
+import { Inter, Lusitana } from 'next/font/google';
+
+export const lusitana = Lusitana({ subsets: ['latin'], weight: ["400","700"] });
+
+//page.tsx:
+import { lusitana } from '@/app/ui/fonts';
+
+
+ <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`} >
+
+
+-The <Image> component:
+    The <Image> Component is an extension of the HTML <img> tag, and comes with automatic image optimization like:
+    Preventing layout shift automatically when images are loading.
+    Resizing images to avoid shipping large images to devices with a smaller viewport.
+    Lazy loading images by default (images load as they enter the viewport).
+
+    -It is good practice to give width and height to the Image.
+
+
+-Creating Layouts and Pages:
+    --Nested routing
+        Next.js uses file-system routing where folders are used to create nested routes. 
+        Each folder represents a route segment that maps to a URL segment.
+
+
