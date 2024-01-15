@@ -97,6 +97,43 @@ h2 {
   border: 2px solid olivedrab;
 }
 
+.table-header {
+  border-bottom: 2px solid red;
+}
+
+.grid-1 {
+  grid-area: a;
+}
+
+.grid-2 {
+  grid-area: b;
+}
+
+.grid-3 {
+  grid-area: c;
+}
+
+.grid-4 {
+  grid-area: d;
+}
+
+.grid-5 {
+  grid-area: e;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas: "a a a a a a" "b c c c d d" "b e e e e e";
+  gap: 15px;
+  margin: 20px 0px;
+}
+
+.grid {
+  background-color: aqua;
+  padding: 20px 0;
+  text-align: center;
+}
+
 nav ul {
   margin: 0;
   padding: 0;

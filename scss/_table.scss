@@ -25,10 +25,15 @@
    z-index: 2;
    background-color:blueviolet;
    color: white;
+  
 
 }
 
 .table-cell{
     display: table-cell;
     border:2px solid olivedrab;
+}
+
+ .table-header{
+    border-bottom: 2px solid red;
 }
