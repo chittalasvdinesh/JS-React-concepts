@@ -219,3 +219,166 @@ import { lusitana } from '@/app/ui/fonts';
         Each folder represents a route segment that maps to a URL segment.
 
 
+
+
+
+--------------
+
+layout.tsx-UI that can be shared across the pages in application
+page.tsx- UI that we can see on browser and layout.tsx will access this component as a children
+
+React server component (RSC):
+introduced by react team in v18 and embraced by next.js.
+architecture introduced two types of components.
+ 1. server components (default in next.js, ability reading files or fecthing data from database. No ability to use hooks and handle user interactions)
+ 2. client components (to use in next.js, add "use client" at top of the component.It use hooks and perform interactions)
+
+
+Routing:
+file -system based Routing mechanism.
+URL paths- files and folders.
+all files must be placed in app router.
+file corresponding to route must be page.tsx or page.js
+
+nested routes:
+folder inside a another folder which has page.tsx file
+ex: /dashbard/setting ---> dashbard->setting->page.tsx
+
+
+Dynamic routes:
+want to create routes from dynamic data, 
+A Dynamic Segment can be created by wrapping a folder's name in square brackets: [folderName]. For example, [id] or [slug].
+
+
+Catch all segments:
+[...slug]
+to access default page [[...slug]].
+
+
+not-found:
+to create custom not found page. create a "not-found" folder with a page.tsx in it. you can create a not-found folder within the component itself also. 
+component.
+ex:
+import { notFound } from "next/navigation";
+const ReviewDetails=({params}:{params:{productId:string,reviewId:string}})=>{
+    if(parseInt(params.reviewId)>100){
+      notFound()
+    }
+    return <>
+    Review {params.reviewId} of Product {params.productId} 
+    </>
+}
+
+
+private folders:
+it is private implementation detail and should not be considered by the Routing system. folder and its subfolders are excluded from routing.
+prefix the folder name with underscore.
+useful in:
+-sepeartes UI logic from routing logic.
+-organising internal files in project.
+-avoiding potential naming conflicts with future next.js file convections.
+
+
+layout:
+A page is UI that is unique to a route.
+A layout is UI that is shared between multiple pages in the app.
+
+ex:
+
+
+        header
+
+
+        content
+
+
+        footer
+
+How to create a layout:
+layout can be defined by default exporting a react component from layout.tsx or .js file.
+that component accept children prop that will be populated with a children page during rendering.
+
+by default, next.js provides a layout.tsx file inside app router. this is called root layout. It is mandatory layout in next.js
+
+ex:
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <header style={{background:"lightblue",padding:"1rem"}}>
+          <p>Header</p>
+        </header>
+        {children}
+        <footer>
+          <p style={{background:"ghostwhite",padding:"1rem"}}>Footer</p>
+        </footer>
+
+      </body>
+    </html>
+  )
+}
+
+Nested layout:
+
+ex:
+const ProductDetailsLayout=({children}:{children:React.ReactNode})=>{
+    return <>
+    {children}
+    <h2>Product Features</h2>
+    </>
+}
+
+export default ProductDetailsLayout;
+
+
+
+Route groups:
+Route Groups organize routes in the app directory without altering URL paths. Enclosing a folder name in parentheses creates a Route Group that keeps related routes together.
+used for better organisation.
+Opting specific segments into a layout.. The routes outside of the group will not share the layout.
+
+On this page
+Convention
+Examples
+Organize routes without affecting the URL path
+Opting specific segments into a layout
+Creating multiple root layouts
+Edit this page on GitHub
+Scroll to top
+App Router
+...
+Routing
+Route Groups
+Route Groups
+In the app directory, nested folders are normally mapped to URL paths. However, you can mark a folder as a Route Group to prevent the folder from being included in the route's URL path.
+
+This allows you to organize your route segments and project files into logical groups without affecting the URL path structure.
+
+Route groups are useful for:
+
+Organizing routes into groups e.g. by site section, intent, or team.
+Enabling nested layouts in the same route segment level:
+Creating multiple nested layouts in the same segment, including multiple root layouts
+Adding a layout to a subset of routes in a common segment
+Convention
+A route group can be created by wrapping a folder's name in parenthesis: (folderName)
+
+Examples
+Organize routes without affecting the URL path
+To organize routes without affecting the URL, create a group to keep related routes together. The folders in parenthesis will be omitted from the URL (e.g. (marketing) or (shop)).
+
+Organizing Routes with Route Groups
+Even though routes inside (marketing) and (shop) share the same URL hierarchy, you can create a different layout for each group by adding a layout.js file inside their folders.
+
+Route Groups with Multiple Layouts
+Opting specific segments into a layout
+To opt specific routes into a layout, create a new route group (e.g. (shop)) and move the routes that share the same layout into the group (e.g. account and cart). The routes outside of the group will not share the layout (e.g. checkout).
+
+Route Groups with Opt-in Layouts
+Creating multiple root layouts
+ex:
+(marketing)
