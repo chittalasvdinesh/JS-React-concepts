@@ -245,6 +245,19 @@ ex:button--disabled
 
 // html:
 
+HTMl (Hyper Text Markup Language)- markup language for creating web pages.
+-structure of web page.
+-tells the browser how to display the content.
+
+structure:
+<!DocType html>->html5 documnet.
+<html>-The root element that wraps the entire HTML document.
+<head>-meta information about html page.
+  --    <meta charset="UTF-8"> -> charcter encoding
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -> viewport for responsive design
+    <title>Pratise document</title> -> Sets the title of the HTML document, which appears in the browser tab or window.
+
+
 // css:
 
   -used to style html dcumnet or website
