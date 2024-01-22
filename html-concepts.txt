@@ -1,0 +1,19 @@
+-lang attribute?
+    The lang attribute in HTML is used to specify the primary language for the content of the document. 
+    It is a global attribute, meaning it can be applied to any HTML element. 
+    The value of the lang attribute is a language tag, which typically consists of a two-letter language code
+
+-semantic vs non-semantic element?
+
+    --A semantic element clearly describes its meaning to both the browser and the developer.
+    readability
+    Improves SEO
+    ex: header, footer, section, main, aside, article(independent and self contain info like blogs, newspaper articles),table
+
+
+    --Non-semantic- no meaning
+
+    ex: div,span
+
+
+-
