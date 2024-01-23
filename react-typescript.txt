@@ -295,5 +295,248 @@ export const theme={
 
  --------
 
- 
+ ex: useContext() future value
+
+ //User.tsx
+
+ import { useContext, useState } from "react";
+import { UserContext } from "./UserContext";
+
+const User = () => {
+    const userContext=useContext(UserContext)
+    const handleLogin = () => {
+    //   if(userContext){ 
+        // if type assertion not used then include if condition because of null value
+        userContext.setUser({
+            name:"dinesh",
+            email:"dinesh@gmail.com"
+        })
+    //   }
+    }
+    const handleLogout = () => {
+        // if(userContext){
+            userContext.setUser(null)
+        // }
+    }
+
+    return <>
+        {!userContext?.user?<button onClick={handleLogin}>Login</button>
+        :<button onClick={handleLogout}>Logout</button>}
+        <div>
+            <div>User name is {userContext?.user?.name}</div>
+            <div>Email is {userContext?.user?.email}</div>
+
+        </div>
+    </>
+};
+
+export default User
+
+//UserContext.tsx
+
+import React, { createContext, useState } from "react"
+
+
+
+
+export type AuthUser={
+    name:string,
+    email:string
+};
+
+export type UserContextType={
+    user:AuthUser|null,
+    setUser:React.Dispatch<React.SetStateAction<AuthUser | null>>
+}
+
+export const UserContext=createContext<UserContextType >({} as UserContextType);
+
+export const UserContextProvider=({children}:{children:React.ReactNode})=>{
+    const[user,setUser]=useState<AuthUser|null>(null);
+  return <>
+  <UserContext.Provider value={{user,setUser}}>
+    {children}
+  </UserContext.Provider>
+  </>
+}
+
+
+//
+
+
+//App.tsx
+
+  <UserContextProvider>
+        <User/>
+       </UserContextProvider>
+
+//
        
+
+
+ex: for DOM using useRef()
+import React, { useEffect, useRef } from "react"
+
+export const DomRef=()=>{
+    const inputRef=useRef<HTMLInputElement>(null!); // allows to use focus without optional chaining with type assertion
+
+    useEffect(()=>{
+      inputRef.current.focus()
+    },[])
+
+
+    return<>
+    <input type="text" ref={inputRef} />
+    </>
+}
+
+
+ex: mutating Ref using useRef()
+
+import { useEffect, useRef, useState } from "react"
+
+export const MutableRef = () => {
+    const intervalRef = useRef<number | null>(null);
+    const [timer, setTimer] = useState(0)
+    const stopTimer = () => {
+        if(intervalRef.current) window.clearInterval(intervalRef.current)
+    };
+
+    useEffect(() => {
+        intervalRef.current = window.setInterval(() => {
+            setTimer((timer) => timer + 1)
+        }, 1000)
+
+        return () => {
+            stopTimer()
+        }
+    }, [])
+
+
+    return <div>
+        <h2>Timer-{timer}</h2>
+        <button onClick={() => stopTimer()}>Stop Timer</button>
+    </div>
+}
+
+
+simplly on Dom references use DOM element type. while mutable ref, use appropriate types.
+
+ex: type in class compoenent
+
+Class Counter extends Component<CounterProps,CounterState>{
+  /// code
+}
+
+ex: component as a prop
+
+export const Private=({isLoggedIn,component:Component}:{isLoggedIn:boolean,component:React.ComponentType<{name:string} >})=>{
+    if(isLoggedIn){
+       return <Component name="Dinnu"/>
+    }
+    return <Login/>
+}
+
+
+ex: generics for any type
+type ListProps<T>={
+    items:T[],
+    onClick:(val:number)=>void
+}
+
+export const List=<T extends {id:number,name:string}>({items,onClick}:ListProps<T>)=>{
+    return <div>
+        <h2>List of items</h2>
+        <div>
+           {items.map((val)=>{
+            return (
+                <div key={val.id} onClick={()=>onClick(val.id)}>{val.name}</div>
+            )
+           })}
+        </div>
+    </div>
+}
+
+
+
+ex: Restricting props
+
+
+type RandomNNumberType = {
+    value: number
+}
+
+type PositiveNumber = RandomNNumberType & {
+    isPositive: boolean,
+    isNegative?: never,
+    isZero?: never
+}
+
+type NegativeNumber = RandomNNumberType & {
+    isPositive?: never,
+    isNegative: boolean,
+    isZero?: never
+}
+
+type ZeroNumber = RandomNNumberType & {
+    isPositive?: never,
+    isNegative?: never,
+    isZero: boolean
+}
+
+type RandomNNumberProps = PositiveNumber | NegativeNumber | ZeroNumber
+
+
+export const RandomNNumber = ({
+    value,
+    isPositive,
+    isNegative,
+    isZero
+}: RandomNNumberProps) => {
+    return <div>
+        {value} {isPositive && "Positive"} {isNegative && "Negative"} {isZero && "Zero"}
+    </div>
+}
+
+ex:template literatls
+
+type ToastProps={
+    position:
+    | Exclude<`${hp}${vp}`,'center-center'> 
+    | 'center'
+}
+
+ex: Wrapping HTML elements
+//App.tsx
+ <CustomButton variant='primary' onClick={()=>console.log("clicked")}>Primary</CustomButton>
+ <CustomInput type='text' onChange={(e)=>console.log(e.target.value)} />
+ <CustomInput type='password' onChange={(e)=>console.log(e.target.value)} />
+
+
+//Button.tsx
+
+type ButtonProps={
+    variant:'primary'|'secondary',
+    children:string
+    
+} & Omit<React.ComponentProps<'button'>,"children"> // suppose the children should be only string
+
+export const  CustomButton=({variant,children,...rest}:ButtonProps)=>{
+    return <button className={`btn-${variant}`} {...rest}>{children}</button>
+}
+
+//Input.tsx
+type InputProps=React.ComponentProps<"input">
+
+export const CustomInput=(props:InputProps)=>{
+    return <input {...props}/>
+}
+
+
+ex: how to extract a component prop
+
+export const CustomComponent=(props:React.ComponentProps<typeof Greet>)=>{
+    return <div>
+   {props.name}
+    </div>
+}
