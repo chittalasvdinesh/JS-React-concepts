@@ -322,6 +322,21 @@ A queue is a data structure following the First In, First Out (FIFO) principle, 
 
 
 // Asynchronous programming often involves queuing mechanisms to manage the order of execution.
+
+
+
+// debouncing vs throttling
+Throttling and debouncing are techniques used to optimize performance by controlling 
+how often a function is executed in response to frequent events.
+
+-throttling: limits the number of times a function can be called over a period.
+ It calls the function only once regardless how many times that event is triggred.
+ ex:  window resizing, scrolling, or mouse movements.
+ 
+-debouncing:: Delays the execution of a function until a certain amount of time has passed without it being called again.
+ It ensures the function runs only once after a series of rapid events, executing only after the last event in the series and after a specified delay.
+ ex: API calls, DOM updates
+
 ---------------------
 git vs github:
 

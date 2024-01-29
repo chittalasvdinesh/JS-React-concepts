@@ -1,0 +1,98 @@
+Javascript:
+-Everything happens in js happens inside a "execution context".
+-execution context is like a container has 2 components.
+-first component (memory component) all variables and functions are stored as key-value pairs.This is called variable enviroment.
+-second component (code component). this is place where code executed line by line. This is called thread of execution.
+-So this thread of execution is like a thread in which code is executed at one line at a time.
+-**JS is synchronous Single threaded language ** .
+
+
+ex:
+//  code
+var n=2;
+function square(num){
+    var res=num*num;
+    return res;
+};
+
+var square2=square(n);
+var square4=square(4);
+//
+
+// execution context is creaed after executing the code.
+
+In memory creation phase (first phase), 
+n:undefined
+square:{...entire code}
+square2:undefined
+square4:undefined
+
+In code execution phase (second phase)
+n:2
+another execution context is created for function with memory creation phase and code execution phase.
+num:undefined
+res:undefined
+
+//
+num:2
+res:4
+after return value then this function execution context is deleted.
+square2:4
+another execution context is created for function with memory creation phase and code execution phase.
+num:undefined
+res:undefined
+
+//
+num:4
+res:16
+after return value then this function execution context is deleted.
+square4:16
+All lines execution is completed.Now its global execution context is deleted.
+
+//
+
+
+--Call Stack:
+Whenever any JS program is run then call stack is populated with global execution context.
+i.e, global execution context is pushed inside the call stack. 
+whenever execution context is deleted it is moved out of the stack.
+ call stack is only for managing the execution context.
+
+ --Hoisting:
+ function declaration:entire function code.
+ function expression or arrow function:undefined (memory allocation is like variable)
+
+ if we access at the top for function expression or arrow function. then it will throw error.
+
+
+ window: It is a global object created along with execution context whenever we run js code.
+ It is "window" for browser.
+
+ whenever we create any variables or functions in global space then those will be attached to window object.
+
+ undefined= memory is allocated.It is a placeholder which is kept for time being until variable is assigned with some value.
+ not defined=memory is not allocated.
+
+lexical= order / hierarchy
+ lexical enviroment =local memory + lexical enviroment of its parent
+ex:
+  function a(){
+    var b=10;
+    c()
+    function c(){
+        console.log(b)
+    }
+}
+a()
+
+ lexical enviroment of c() =local memory of C() + lexical enviroment of its parent a()
+ lexical enviroment of a()=local memory of a() + lexical enviroment of  global
+ lexical enviroment of global=local memory + null;
+
+ the whole chain of lexical enviroment is called scope chain.
+ if scope chain exhausted and variable not found then variable is not inside the scope chain.
+
+ let vs var:(hoisting)
+ JS allocates memory to both variables declaring with var and let.
+ But in case of var. it is attached global object.
+ But in case of let. it is attached to seperated memory space.so that's why we cannot access.

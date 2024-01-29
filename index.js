@@ -124,3 +124,80 @@ const text="My APP Heading";
 const headerContent=document.createTextNode(text);
 myAppHeadingEl.appendChild(headerContent);
 myApp.appendChild(myAppHeadingEl)
+
+
+// excecution example
+
+// var n=2;
+// function square(num){
+//     var res=num*num;
+//     return res;
+// };
+
+// var square2=square(2);
+// var square4=square(4);
+
+// ends
+
+
+// hoisting example
+// getName(); // This is dinesh
+// myName(); // error:myName is not a function
+// console.log(x); //undefined
+// console.log(getName)
+
+// var x=5;
+
+// function getName(){
+//     console.log("This is dinesh");
+// }
+
+// var myName=()=>{
+//    console.log("dinesh");
+// }
+
+//ends
+
+//functions
+
+// var x=1;
+// a()
+// b();
+// console.log(x);
+// function a(){
+//     var x=10;
+//     console.log(x);
+// }
+
+// function b(){
+//     var x=100;
+//     console.log(x);
+// }
+//
+
+//this, window
+  
+// var a=10;
+// function abc(){
+//     var x=5;
+// }
+
+// console.log(window.a); //10
+// console.log(window.abc); // function
+// console.log(window.x); // undefined
+// console.log(this.a);
+
+//
+
+// scope chain
+
+function a(){
+    var b=10;
+    c()
+    function c(){
+        console.log(b)
+    }
+}
+a()
+
+//
